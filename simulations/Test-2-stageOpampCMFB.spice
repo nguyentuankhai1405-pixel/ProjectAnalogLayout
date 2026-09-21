@@ -1,0 +1,110 @@
+** sch_path: /foss/designs/BTDay5-Ex/Test-2-stageOpampCMFB.sch
+**.subckt Test-2-stageOpampCMFB
+VDD VDD VSS 1.2
+VIN VIN VSS DC 0.8 Ac -0.5
+VIP VIP VSS DC 0.8 Ac +0.5
+VSS VSS GND 0
+VB2 VBIAS VSS 0.65
+VSS1 VCM GND 0.6
+x1 VCM VDD VBIAS VOP VON VIP VIN GND 2-stageOpampCMFB
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+.control
+save all
+op
+
+* 1. IN DIEM LAM VIEC DC VA CONG SUAT
+let power_mw = abs(i(vdd)[0]) * 1.2 * 1000
+echo ================= KET QUA DC & CONG SUAT =================
+print v(vip) v(vin) v(vbias) v(vcm) v(vop) v(von)
+print power_mw
+
+* 2. MO PHONG AC
+ac dec 100 1 10G
+
+* Tinh toan vi sai VOP va VON
+let vid = v(vip) - v(vin)
+let vod = v(vop) - v(von)
+let av = vod / vid
+let gain_db = db(av)
+let phase_deg = cph(av) * 180 / pi
+let open_loop_gain_times = mag(av[0])
+
+if phase_deg[0] > 90
+  let phase_deg = phase_deg - 360
+end
+
+meas ac f_ug when gain_db=0 fall=1
+meas ac phase_at_ug find phase_deg when gain_db=0 fall=1
+let phase_margin = 180 + phase_at_ug
+
+echo ================= KET QUA SPEC EX3 =================
+echo Open Loop Gain (lan):
+print open_loop_gain_times
+echo DC Gain (dB):
+print gain_db[0]
+echo Bandwidth GBW f_ug:
+print f_ug
+echo Phase Margin:
+print phase_margin
+echo Cong suat Power (mW):
+print power_mw
+echo ===================================================
+
+let line_0db = 0 * frequency
+let line_m180 = -180 + 0 * frequency
+
+plot gain_db phase_deg line_0db line_m180 xlog ylimit -360 80 title 'Ex3: Fully-Diff OpAmp with CMFB'
+.endc
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /foss/designs/BTDay5-Ex/2-stageOpampCMFB.sym # of pins=8
+** sym_path: /foss/designs/BTDay5-Ex/2-stageOpampCMFB.sym
+** sch_path: /foss/designs/BTDay5-Ex/2-stageOpampCMFB.sch
+.subckt 2-stageOpampCMFB VCM VDD VBIAS VOP VON VIP VIN VSS
+*.iopin VDD
+*.iopin VSS
+*.ipin VBIAS
+*.opin VON
+*.ipin VIN
+*.ipin VIP
+*.opin VOP
+*.ipin VCM
+XM1 net3 VIN net1 VSS sg13_lv_nmos w=4u l=1u ng=1 m=2 mm_ok=1
+XM2 net2 VIP net1 VSS sg13_lv_nmos w=4u l=1u ng=1 m=2 mm_ok=1
+XM3 net1 VCMFBG VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=4 mm_ok=1
+XM4 net3 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM7 VB2 VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM8 VB2 VBIAS VDD VDD sg13_lv_pmos w=2u l=6u ng=1 m=1 mm_ok=1
+XM10 net2 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM5 VOP VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM11 VOP net2 VDD VDD sg13_lv_pmos w=4u l=1u ng=1 m=1 mm_ok=1
+C2 VOP net4 1.8p
+R1 net4 net2 50k
+XM9 VON VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+C3 net5 VON 1.8p
+R2 net3 net5 50k
+XM12 VB1 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM13 VB1 VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM6 VON net3 VDD VDD sg13_lv_pmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM14 net7 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM15 net6 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM16 VCMFBG VOP net6 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM17 VCMFBL VCM net6 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM18 VCMFBL VCM net7 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM19 VCMFBG VON net7 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM20 VCMFBL VCMFBL VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=4 mm_ok=1
+XM21 VCMFBG VCMFBG VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=4 mm_ok=1
+.ends
+
+.GLOBAL GND
+.end

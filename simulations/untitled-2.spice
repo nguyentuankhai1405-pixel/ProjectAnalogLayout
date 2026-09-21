@@ -1,0 +1,37 @@
+** sch_path: /foss/designs/untitled-2.sch
+**.subckt untitled-2 VCM
+*.ipin VCM
+XM4 VOP VIN net2 VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM0 net1 VB1 VDD VDD sg13_lv_pmos w=8u l=0.7u ng=1 m=2 mm_ok=1
+XM5 net2 VB3 VSS VSS sg13_lv_nmos w=4u l=0.7u ng=1 m=2 mm_ok=1
+XM3 VON VIP net2 VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM2 VON VIP net1 VDD sg13_lv_pmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM1 VOP VIN net1 VDD sg13_lv_pmos w=4u l=1u ng=1 m=1 mm_ok=1
+VDD VDD VSS 0.8
+VIN VIN VSS DC 0.4 Ac -0.5 0
+VIP VIP VSS DC 0.4 Ac 0.5 0
+VSS VSS GND 0
+VB2 VBIAS VSS 0.45
+VSS1 VCM GND 0.4
+XM6 VB1 VB1 VDD VDD sg13_lv_pmos w=15u l=0.7u ng=1 m=2 mm_ok=1
+XM7 net3 VB1 VDD VDD sg13_lv_pmos w=15u l=0.7u ng=1 m=2 mm_ok=1
+XM9 VB3 VB2 net3 VDD sg13_lv_pmos w=15u l=0.7u ng=1 m=2 mm_ok=1
+XM10 net4 VBIAS VDD VDD sg13_lv_pmos w=1u l=4u ng=1 m=2 mm_ok=1
+XM11 net4 net4 net5 VSS sg13_lv_nmos w=3u l=1u ng=1 m=1 mm_ok=1
+XM12 VB2 net4 net6 VSS sg13_lv_nmos w=3u l=1u ng=1 m=1 mm_ok=1
+XM13 net5 net5 VSS VSS sg13_lv_nmos w=3u l=1u ng=1 m=1 mm_ok=1
+XM15 VB3 VB3 VB4 VSS sg13_lv_nmos w=7u l=0.7u ng=1 m=1 mm_ok=1
+XM16 VB4 VB4 VSS VSS sg13_lv_nmos w=7u l=0.7u ng=1 m=1 mm_ok=1
+XM8 VB2 VB2 VB1 VDD sg13_lv_pmos w=15u l=0.7u ng=1 m=2 mm_ok=1
+XM14 net6 net5 VSS VSS sg13_lv_nmos w=3u l=1u ng=1 m=1 mm_ok=1
+XM17 net8 VB1 net9 net9 sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM18 net7 VB1 net9 net9 sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM19 VCMFBG VOP net7 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM20 VCMFBL VCM net7 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM21 VCMFBL VCM net8 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM22 VCMFBG VON net8 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM23 VCMFBL VCMFBL net10 net10 sg13_lv_nmos w=4u l=1u ng=1 m=4 mm_ok=1
+XM24 VCMFBG VCMFBG net10 net10 sg13_lv_nmos w=4u l=1u ng=1 m=4 mm_ok=1
+**.ends
+.GLOBAL GND
+.end

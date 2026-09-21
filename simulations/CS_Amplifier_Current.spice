@@ -1,0 +1,26 @@
+** sch_path: /foss/designs/BaiTap1/CS_Amplifier_Current.sch
+**.subckt CS_Amplifier_Current
+XXM1 vout vin GND GND sg13_lv_nmos w=4u l=1.3u ng=1 m=1 mm_ok=1
+XXM2 vout net1 VDD VDD sg13_lv_pmos w=15u l=1.3u ng=1 m=1 mm_ok=1
+VDD VDD GND 1.2
+Vb net1 GND 0.62
+VIN vin GND DC 0.45 AC 1
+C1 vout GND 100f
+**** begin user architecture code
+
+
+.op
+.ac dec 50 1k 1G
+.save all
+.end
+
+
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+**** end user architecture code
+**.ends
+.GLOBAL GND
+.end

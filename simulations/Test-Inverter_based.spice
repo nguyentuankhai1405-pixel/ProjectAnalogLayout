@@ -1,0 +1,130 @@
+** sch_path: /foss/designs/BTDay8-Ex/Test-Inverter_based.sch
+**.subckt Test-Inverter_based
+VDD VDD VSS 1.6
+VIN VIN VSS DC 0.4 Ac -0.5 0
+VIP VIP VSS DC 0.4 Ac 0.5 0
+VSS VSS GND 0
+VBIAS VBIAS VSS 0.2
+VSS1 VCM GND 1
+x1 net1 net2 VIP VIN VCMFBG VDD VSS VB1 AMP_INV_08V
+x2 VB1 VBIAS VB2 VB3 VB4 VDD VSS AMP_BIAS_08V
+x3 VCMFBG VCMFBL VDD VSS VB1 VCM VON VOP AMP_CMFB_INV_08V
+x4 VON VOP net2 net1 VDD VSS VB1 AMP_CS_08V
+**** begin user architecture code
+
+
+.lib /foss/pdks/ihp-sg13g2/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+
+.control
+op
+save all
+ac dec 100 1 10G
+
+* Tinh tin hieu vi sai nguyen ban
+let vod = v(vop) - v(von)
+let gain = db(vod)
+let phase = (180/pi) * cph(vod)
+
+* Do tu dong Gain DC, UGB va Phase Margin
+meas ac A0 MAX gain
+meas ac f_ugb WHEN gain=0
+meas ac p_at_ugb FIND phase WHEN gain=0
+let PM = 180 + p_at_ugb
+print A0 f_ugb PM
+
+plot gain xlog title 'Voltage Gain (dB)'
+plot phase xlog title 'Phase (deg)'
+.endc
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /foss/designs/BTDay8-Ex/AMP_INV_08V.sym # of pins=8
+** sym_path: /foss/designs/BTDay8-Ex/AMP_INV_08V.sym
+** sch_path: /foss/designs/BTDay8-Ex/AMP_INV_08V.sch
+.subckt AMP_INV_08V VOP VON VIP VIN VB3 VDD VSS VB1
+*.iopin VDD
+*.iopin VSS
+*.opin VOP
+*.opin VON
+*.ipin VIN
+*.ipin VIP
+*.ipin VB3
+*.ipin VB1
+XM4 VOP VIN net2 VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM0 net1 VB1 VDD VDD sg13_lv_pmos w=8u l=0.7u ng=1 m=2 mm_ok=1
+XM5 net2 VB3 VSS VSS sg13_lv_nmos w=4u l=0.7u ng=1 m=2 mm_ok=1
+XM3 VON VIP net2 VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM2 VON VIP net1 VDD sg13_lv_pmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM1 VOP VIN net1 VDD sg13_lv_pmos w=4u l=1u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  /foss/designs/BTDay8-Ex/AMP_BIAS_08V.sym # of pins=7
+** sym_path: /foss/designs/BTDay8-Ex/AMP_BIAS_08V.sym
+** sch_path: /foss/designs/BTDay8-Ex/AMP_BIAS_08V.sch
+.subckt AMP_BIAS_08V VB1 VBIAS VB2 VB3 VB4 VDD VSS
+*.iopin VDD
+*.iopin VSS
+*.ipin VBIAS
+*.opin VB1
+*.opin VB2
+*.opin VB3
+*.opin VB4
+XM6 VB1 VB1 VDD VDD sg13_lv_pmos w=15u l=0.7u ng=1 m=2 mm_ok=1
+XM7 net1 VB1 VDD VDD sg13_lv_pmos w=15u l=0.7u ng=1 m=2 mm_ok=1
+XM9 VB3 VB2 net1 VDD sg13_lv_pmos w=15u l=0.7u ng=1 m=2 mm_ok=1
+XM10 net2 VBIAS VDD VDD sg13_lv_pmos w=1u l=4u ng=1 m=2 mm_ok=1
+XM11 net2 net2 net3 VSS sg13_lv_nmos w=3u l=1u ng=1 m=1 mm_ok=1
+XM12 VB2 net2 net4 VSS sg13_lv_nmos w=3u l=1u ng=1 m=1 mm_ok=1
+XM13 net3 net3 VSS VSS sg13_lv_nmos w=3u l=1u ng=1 m=1 mm_ok=1
+XM15 VB3 VB3 VB4 VSS sg13_lv_nmos w=7u l=0.7u ng=1 m=1 mm_ok=1
+XM16 VB4 VB4 VSS VSS sg13_lv_nmos w=7u l=0.7u ng=1 m=1 mm_ok=1
+XM8 VB2 VB2 VB1 VDD sg13_lv_pmos w=15u l=0.7u ng=1 m=2 mm_ok=1
+XM14 net4 net3 VSS VSS sg13_lv_nmos w=3u l=1u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  /foss/designs/BTDay8-Ex/AMP_CMFB_INV_08V.sym # of pins=8
+** sym_path: /foss/designs/BTDay8-Ex/AMP_CMFB_INV_08V.sym
+** sch_path: /foss/designs/BTDay8-Ex/AMP_CMFB_INV_08V.sch
+.subckt AMP_CMFB_INV_08V VCMFBG VCMFBL VDD VSS VB1 VCM VON VOP
+*.ipin VCM
+*.opin VCMFBL
+*.opin VCMFBG
+*.ipin VOP
+*.ipin VB1
+*.iopin VSS
+*.iopin VDD
+*.ipin VON
+XM17 net2 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM18 net1 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM19 VCMFBG VOP net1 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM20 VCMFBL VCM net1 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM21 VCMFBL VCM net2 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM22 VCMFBG VON net2 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM23 VCMFBL VCMFBL VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=4 mm_ok=1
+XM24 VCMFBG VCMFBL VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=4 mm_ok=1
+.ends
+
+
+* expanding   symbol:  /foss/designs/BTDay8-Ex/AMP_CS_08V.sym # of pins=7
+** sym_path: /foss/designs/BTDay8-Ex/AMP_CS_08V.sym
+** sch_path: /foss/designs/BTDay8-Ex/AMP_CS_08V.sch
+.subckt AMP_CS_08V VOP VON VIP VIN VDD VSS VB1
+*.iopin VDD
+*.ipin VIN
+*.ipin VIP
+*.iopin VSS
+*.ipin VB1
+*.opin VOP
+*.opin VON
+XM1 VOP VB1 VDD VDD sg13_lv_pmos w=15u l=1u ng=1 m=1 mm_ok=1
+XM2 VON VB1 VDD VDD sg13_lv_pmos w=15u l=1u ng=1 m=1 mm_ok=1
+XM3 VOP VIN VSS VSS sg13_lv_nmos w=9u l=1u ng=1 m=1 mm_ok=1
+XM4 VON VIP VSS VSS sg13_lv_nmos w=9u l=1u ng=1 m=1 mm_ok=1
+.ends
+
+.GLOBAL GND
+.end

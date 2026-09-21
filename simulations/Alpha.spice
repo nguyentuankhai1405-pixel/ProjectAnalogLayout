@@ -1,0 +1,11 @@
+** sch_path: /foss/designs/Alpha.sch
+**.subckt Alpha A Y VDD VSS
+*.ipin A
+*.opin Y
+*.iopin VDD
+*.iopin VSS
+XXM1 Y A VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XXM2 Y A VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+**.ends
+.end
+

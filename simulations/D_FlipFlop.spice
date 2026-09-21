@@ -1,0 +1,47 @@
+** sch_path: /foss/designs/LogicGate/D_FlipFlop.sch
+**.subckt D_FlipFlop D Q CLK VDD VSS
+*.ipin D
+*.ipin CLK
+*.opin Q
+*.iopin VDD
+*.iopin VSS
+xTG1 VDD CLK QM1 D CLKB VSS Tranmission
+xTG2 VDD CLKB QS1 QM2 CLK VSS Tranmission
+xTG_fb1 VDD CLKB QM1 net1 CLK VSS Tranmission
+xTG_fb2 VDD CLK QS1 net2 CLKB VSS Tranmission
+x1 VDD QM1 QM2 VSS inverter
+x2 VDD QM2 net1 VSS inverter
+x3 VDD QS1 Q VSS inverter
+x4 VDD Q net2 VSS inverter
+x5 VDD QM1 QM2 VSS inverter
+x6 VDD CLK CLKB VSS inverter
+**.ends
+
+* expanding   symbol:  /foss/designs/LogicGate/Tranmission.sym # of pins=6
+** sym_path: /foss/designs/LogicGate/Tranmission.sym
+** sch_path: /foss/designs/LogicGate/Tranmission.sch
+.subckt Tranmission VDD ENB OUT IN EN VSS
+*.ipin IN
+*.opin OUT
+*.iopin VDD
+*.iopin VSS
+*.ipin EN
+*.ipin ENB
+XXM1 OUT ENB IN VDD sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XXM2 OUT EN IN VSS sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  /foss/designs/BTDay6-Ex/inverter.sym # of pins=4
+** sym_path: /foss/designs/BTDay6-Ex/inverter.sym
+** sch_path: /foss/designs/BTDay6-Ex/inverter.sch
+.subckt inverter VDD A Y VSS
+*.ipin A
+*.opin Y
+*.iopin VDD
+*.iopin VSS
+XM1 Y A VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XM2 Y A VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+.ends
+
+.end

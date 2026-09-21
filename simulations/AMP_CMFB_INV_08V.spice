@@ -1,0 +1,20 @@
+** sch_path: /foss/designs/BTDay8-Ex/AMP_CMFB_INV_08V.sch
+**.subckt AMP_CMFB_INV_08V VCMFBG VCMFBL VDD VSS VB1 VCM VON VOP
+*.ipin VCM
+*.opin VCMFBL
+*.opin VCMFBG
+*.ipin VOP
+*.ipin VB1
+*.iopin VSS
+*.iopin VDD
+*.ipin VON
+XM17 net2 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM18 net1 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM19 VCMFBG VOP net1 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM20 VCMFBL VCM net1 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM21 VCMFBL VCM net2 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM22 VCMFBG VON net2 VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM23 VCMFBL VCMFBL VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=4 mm_ok=1
+XM24 VCMFBG VCMFBL VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=4 mm_ok=1
+**.ends
+.end

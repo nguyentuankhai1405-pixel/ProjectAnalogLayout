@@ -1,0 +1,14 @@
+** sch_path: /foss/designs/rlc_circuit.sch
+**.subckt rlc_circuit
+R1 c 0 1k
+C1 b c 50nF
+E1 0 a VOL=' '3*cos(time*time*1e11)' '
+L1 a b 10mH
+**** begin user architecture code
+
+.tran 10n 2000u uic
+.save all
+
+**** end user architecture code
+**.ends
+.end

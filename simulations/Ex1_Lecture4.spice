@@ -1,0 +1,35 @@
+** sch_path: /foss/designs/BTDay4-Ex/Ex1_Lecture4.sch
+**.subckt Ex1_Lecture4
+XM1 VON VIP net1 VSS sg13_lv_nmos w=5u l=1u ng=1 m=1 mm_ok=1
+XM2 VOP VIN net1 VSS sg13_lv_nmos w=5u l=1u ng=1 m=1 mm_ok=1
+XM3 net1 VB VSS VSS sg13_lv_nmos w=5u l=0.35u ng=1 m=1 mm_ok=1
+R1 VDD VON 50k
+R2 VDD VOP 50k
+VDD VDD VSS 1.2
+VIN VIN VSS DC 0.6 Ac +0.5
+VIP VIP VSS DC 0.6 AC -0.5
+VB VB VSS 0.4
+VSS VSS GND 0
+C1 VON VSS 100f
+C2 VOP VSS 100f
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+.control
+op
+print von vop
+print v(vop)-v(von)
+
+ac dec 100 1 10G
+let av_diff = v(vop) - v(von)
+plot db(av_diff) title Differential
+
+**** end user architecture code
+**.ends
+.GLOBAL GND
+.end

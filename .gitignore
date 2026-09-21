@@ -1,0 +1,9 @@
+*.raw
+*.log
+*.swp
+*.bak
+*~
+backups/
+*.ext
+*.nodes
+*.res.ext

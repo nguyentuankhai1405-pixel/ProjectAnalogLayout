@@ -1,0 +1,50 @@
+** sch_path: /foss/designs/BTDay6-Ex/TestGaw-CS_Ampli_Current.sch
+**.subckt TestGaw-CS_Ampli_Current
+C1 OUT GND 100f
+x1 VBIAS VIN VDD OUT VSS CS_Ampli_Current
+VDD1 VDD VSS 1.2
+VSS VSS GND 0
+VB2 VBIAS VSS 0.65
+VIN1 VIN VSS DC 0.45 AC 1
+**** begin user architecture code
+
+.lib cornerMOSlv.lib mos_tt
+.inc /foss/designs/Klayout/CS-Current.spice
+
+.control
+save all
+op
+ac dec 50 1k 10G
+setplot ac1
+
+* 1. XUAT FILE CHO PHAN MEM GAW DOC
+write /foss/designs/simulations/Test-CS_Ampli_Current.raw
+
+* 2. TINH TOAN SO LIEU
+let gain_db = db(v(out))
+let phase_deg = (180/pi) * cph(v(out))
+let dc_gain_db = gain_db[0]
+let open_loop_gain_times = mag(v(out)[0])
+meas ac f_3db when gain_db=(dc_gain_db-3) fall=1
+meas ac f_ug when gain_db=0 fall=1
+
+echo ================= KET QUA EX2 POST-LAYOUT =================
+echo 1. DC Gain (dB):
+print dc_gain_db
+echo 2. He so khuech dai (so lan):
+print open_loop_gain_times
+echo 3. Bang thong f_-3dB (Bandwidth):
+print f_3db
+echo 4. Tan so cat 0dB f_ug (GBW):
+print f_ug
+echo ============================================================
+
+let line_0db = 0 * frequency
+plot gain_db phase_deg line_0db xlog title 'Common-Source Post-Layout AC Response'
+.endc
+
+
+**** end user architecture code
+**.ends
+.GLOBAL GND
+.end

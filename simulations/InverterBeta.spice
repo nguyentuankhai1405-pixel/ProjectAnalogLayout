@@ -1,0 +1,6 @@
+** sch_path: /foss/designs/BTDay2-Ex/InverterBeta.sch
+.subckt InverterBeta VDD A Y VSS
+*.PININFO A:I Y:O VDD:B VSS:B
+MXM1 Y A VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+MXM2 Y A VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+.ends

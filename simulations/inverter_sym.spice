@@ -1,0 +1,31 @@
+** sch_path: /foss/designs/BTDay6-Ex/inverter_sym.sch
+.subckt inverter_sym
+
+VIN vin GND PULSE(0 1.2 0 1n 1n 4n 10n)
+VDD vdd GND 1.2
+x1 vdd vin vout GND inverter
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+.tran 10p 100n
+.save all
+
+
+**** end user architecture code
+.ends
+
+* expanding   symbol:  /foss/designs/BTDay6-Ex/inverter.sym # of pins=4
+** sym_path: /foss/designs/BTDay6-Ex/inverter.sym
+** sch_path: /foss/designs/BTDay6-Ex/inverter.sch
+.subckt inverter VDD A Y VSS
+*.PININFO A:I Y:O VDD:B VSS:B
+MM1 Y A VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+MM2 Y A VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+.ends
+
+.GLOBAL GND

@@ -1,0 +1,51 @@
+** sch_path: /foss/designs/BTDay4-Ex/Test.sch
+**.subckt Test
+VDD VDD VSS 1.2
+VIN VIN VSS DC 0.6 Ac +0.5
+VIP VIP VSS DC 0.6 AC -0.5
+VB VB VSS 0.45
+VSS VSS GND 0
+C1 VOP VSS 100f
+C2 VON VSS 100f
+x1 VON VOP VIN VIP VB VDD VSS diff_diode_load
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+.control
+op
+print v(vop) v(von)
+
+ac dec 100 1 10G
+let av_diff = v(vop) - v(von)
+plot db(av_diff) title 'Differential Gain Ex2'
+.endc
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /foss/designs/BTDay4-Ex/diff_diode_load.sym # of pins=7
+** sym_path: /foss/designs/BTDay4-Ex/diff_diode_load.sym
+** sch_path: /foss/designs/BTDay4-Ex/diff_diode_load.sch
+.subckt diff_diode_load VON VOP VIN VIP VB VDD VSS
+*.ipin VIN
+*.ipin VIP
+*.opin VON
+*.opin VOP
+*.ipin VB
+*.iopin VDD
+*.iopin VSS
+XM1 VON VIP net1 VSS sg13_lv_nmos w=5u l=1u ng=1 m=1 mm_ok=1
+XM2 VOP VIN net1 VSS sg13_lv_nmos w=5u l=1u ng=1 m=1 mm_ok=1
+XM3 net1 VB VSS VSS sg13_lv_nmos w=5u l=0.35u ng=1 m=1 mm_ok=1
+XM4 VON VON VDD VDD sg13_lv_pmos w=5u l=1u ng=1 m=1 mm_ok=1
+XM5 VOP VOP VDD VDD sg13_lv_pmos w=5u l=1u ng=1 m=1 mm_ok=1
+.ends
+
+.GLOBAL GND
+.end

@@ -1,0 +1,124 @@
+** sch_path: /foss/designs/BTDay5-Ex/Ex2_6_Lecture5.sch
+**.subckt Ex2_6_Lecture5
+XM1 net3 VIN net1 VSS sg13_lv_nmos w=4u l=1u ng=1 m=2 mm_ok=1
+XM2 net2 VIP net1 VSS sg13_lv_nmos w=4u l=1u ng=1 m=2 mm_ok=1
+XM3 net1 VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=4 mm_ok=1
+VDD VDD VSS 1.2
+VIN VIN VSS DC 0.8 Ac -0.5
+VIP VIP VSS DC 0.8 Ac +0.5
+VSS VSS GND 0
+XM4 net3 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM7 VB2 VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM8 VB2 VBIAS VDD VDD sg13_lv_pmos w=2u l=6u ng=1 m=1 mm_ok=1
+XM10 net2 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+VB2 VBIAS VSS 0.65
+XM5 VOP VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=5 mm_ok=1
+XM11 VOP net2 VDD VDD sg13_lv_pmos w=4u l=1u ng=1 m=5 mm_ok=1
+C2 VOP net4 0.4p
+R1 net4 net2 150k
+XM9 VON VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=5 mm_ok=1
+C3 net5 VON 0.4p
+R2 net3 net5 150k
+XM12 VB1 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM13 VB1 VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM6 VON net3 VDD VDD sg13_lv_pmos w=4u l=1u ng=1 m=5 mm_ok=1
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+.control
+
+*==================================================
+* 1. SAVE OPERATING-POINT PARAMETERS
+*==================================================
+
+save all
+
+* NMOS
+save @n.xm1.nsg13_lv_nmos[ids] @n.xm1.nsg13_lv_nmos[vgs] @n.xm1.nsg13_lv_nmos[vth] @n.xm1.nsg13_lv_nmos[vds] @n.xm1.nsg13_lv_nmos[vdss] @n.xm1.nsg13_lv_nmos[gm] @n.xm1.nsg13_lv_nmos[gds]
+
+save @n.xm2.nsg13_lv_nmos[ids] @n.xm2.nsg13_lv_nmos[vgs] @n.xm2.nsg13_lv_nmos[vth] @n.xm2.nsg13_lv_nmos[vds] @n.xm2.nsg13_lv_nmos[vdss] @n.xm2.nsg13_lv_nmos[gm] @n.xm2.nsg13_lv_nmos[gds]
+
+save @n.xm3.nsg13_lv_nmos[ids] @n.xm3.nsg13_lv_nmos[vgs] @n.xm3.nsg13_lv_nmos[vth] @n.xm3.nsg13_lv_nmos[vds] @n.xm3.nsg13_lv_nmos[vdss] @n.xm3.nsg13_lv_nmos[gm] @n.xm3.nsg13_lv_nmos[gds]
+
+save @n.xm5.nsg13_lv_nmos[ids] @n.xm5.nsg13_lv_nmos[vgs] @n.xm5.nsg13_lv_nmos[vth] @n.xm5.nsg13_lv_nmos[vds] @n.xm5.nsg13_lv_nmos[vdss] @n.xm5.nsg13_lv_nmos[gm] @n.xm5.nsg13_lv_nmos[gds]
+
+save @n.xm7.nsg13_lv_nmos[ids] @n.xm7.nsg13_lv_nmos[vgs] @n.xm7.nsg13_lv_nmos[vth] @n.xm7.nsg13_lv_nmos[vds] @n.xm7.nsg13_lv_nmos[vdss] @n.xm7.nsg13_lv_nmos[gm] @n.xm7.nsg13_lv_nmos[gds]
+
+* PMOS
+save @n.xm4.nsg13_lv_pmos[ids] @n.xm4.nsg13_lv_pmos[vgs] @n.xm4.nsg13_lv_pmos[vth] @n.xm4.nsg13_lv_pmos[vds] @n.xm4.nsg13_lv_pmos[vdss] @n.xm4.nsg13_lv_pmos[gm] @n.xm4.nsg13_lv_pmos[gds]
+
+save @n.xm8.nsg13_lv_pmos[ids] @n.xm8.nsg13_lv_pmos[vgs] @n.xm8.nsg13_lv_pmos[vth] @n.xm8.nsg13_lv_pmos[vds] @n.xm8.nsg13_lv_pmos[vdss] @n.xm8.nsg13_lv_pmos[gm] @n.xm8.nsg13_lv_pmos[gds]
+
+save @n.xm10.nsg13_lv_pmos[ids] @n.xm10.nsg13_lv_pmos[vgs] @n.xm10.nsg13_lv_pmos[vth] @n.xm10.nsg13_lv_pmos[vds] @n.xm10.nsg13_lv_pmos[vdss] @n.xm10.nsg13_lv_pmos[gm] @n.xm10.nsg13_lv_pmos[gds]
+
+save @n.xm11.nsg13_lv_pmos[ids] @n.xm11.nsg13_lv_pmos[vgs] @n.xm11.nsg13_lv_pmos[vth] @n.xm11.nsg13_lv_pmos[vds] @n.xm11.nsg13_lv_pmos[vdss] @n.xm11.nsg13_lv_pmos[gm] @n.xm11.nsg13_lv_pmos[gds]
+
+
+*==================================================
+* 2. DC OPERATING POINT
+*==================================================
+
+op
+
+echo ================= M1 NMOS =================
+print @n.xm1.nsg13_lv_nmos[vgs] @n.xm1.nsg13_lv_nmos[vth] @n.xm1.nsg13_lv_nmos[vds] @n.xm1.nsg13_lv_nmos[vdss] @n.xm1.nsg13_lv_nmos[ids] @n.xm1.nsg13_lv_nmos[gm] @n.xm1.nsg13_lv_nmos[gds]
+
+echo ================= M2 NMOS =================
+print @n.xm2.nsg13_lv_nmos[vgs] @n.xm2.nsg13_lv_nmos[vth] @n.xm2.nsg13_lv_nmos[vds] @n.xm2.nsg13_lv_nmos[vdss] @n.xm2.nsg13_lv_nmos[ids] @n.xm2.nsg13_lv_nmos[gm] @n.xm2.nsg13_lv_nmos[gds]
+
+echo ================= M3 NMOS =================
+print @n.xm3.nsg13_lv_nmos[vgs] @n.xm3.nsg13_lv_nmos[vth] @n.xm3.nsg13_lv_nmos[vds] @n.xm3.nsg13_lv_nmos[vdss] @n.xm3.nsg13_lv_nmos[ids] @n.xm3.nsg13_lv_nmos[gm] @n.xm3.nsg13_lv_nmos[gds]
+
+echo ================= M5 NMOS =================
+print @n.xm5.nsg13_lv_nmos[vgs] @n.xm5.nsg13_lv_nmos[vth] @n.xm5.nsg13_lv_nmos[vds] @n.xm5.nsg13_lv_nmos[vdss] @n.xm5.nsg13_lv_nmos[ids] @n.xm5.nsg13_lv_nmos[gm] @n.xm5.nsg13_lv_nmos[gds]
+
+echo ================= M7 NMOS =================
+print @n.xm7.nsg13_lv_nmos[vgs] @n.xm7.nsg13_lv_nmos[vth] @n.xm7.nsg13_lv_nmos[vds] @n.xm7.nsg13_lv_nmos[vdss] @n.xm7.nsg13_lv_nmos[ids] @n.xm7.nsg13_lv_nmos[gm] @n.xm7.nsg13_lv_nmos[gds]
+
+echo ================= M4 PMOS =================
+print @n.xm4.nsg13_lv_pmos[vgs] @n.xm4.nsg13_lv_pmos[vth] @n.xm4.nsg13_lv_pmos[vds] @n.xm4.nsg13_lv_pmos[vdss] @n.xm4.nsg13_lv_pmos[ids] @n.xm4.nsg13_lv_pmos[gm] @n.xm4.nsg13_lv_pmos[gds]
+
+echo ================= M8 PMOS =================
+print @n.xm8.nsg13_lv_pmos[vgs] @n.xm8.nsg13_lv_pmos[vth] @n.xm8.nsg13_lv_pmos[vds] @n.xm8.nsg13_lv_pmos[vdss] @n.xm8.nsg13_lv_pmos[ids] @n.xm8.nsg13_lv_pmos[gm] @n.xm8.nsg13_lv_pmos[gds]
+
+echo ================= M10 PMOS ================
+print @n.xm10.nsg13_lv_pmos[vgs] @n.xm10.nsg13_lv_pmos[vth] @n.xm10.nsg13_lv_pmos[vds] @n.xm10.nsg13_lv_pmos[vdss] @n.xm10.nsg13_lv_pmos[ids] @n.xm10.nsg13_lv_pmos[gm] @n.xm10.nsg13_lv_pmos[gds]
+
+echo ================= M11 PMOS ================
+print @n.xm11.nsg13_lv_pmos[vgs] @n.xm11.nsg13_lv_pmos[vth] @n.xm11.nsg13_lv_pmos[vds] @n.xm11.nsg13_lv_pmos[vdss] @n.xm11.nsg13_lv_pmos[ids] @n.xm11.nsg13_lv_pmos[gm] @n.xm11.nsg13_lv_pmos[gds]
+
+print v(vop) v(von)
+print v(vg11) v(vg6)
+print v(vb1) v(vb2)
+
+
+write op_operating_point.raw
+
+*==================================================
+* 3. DIFFERENTIAL AC GAIN AND PHASE
+*==================================================
+
+ac dec 200 1 10G
+
+let vid = v(vip)-v(vin)
+let vod = v(vop)-v(von)
+let av_diff = vod/vid
+
+let gain_db = db(av_diff)
+let phase_deg = cph(av_diff)*180/pi
+
+if phase_deg[0] > 90
+    let phase_deg = phase_deg-360
+end
+
+plot gain_db phase_deg xlog ylimit -360 80 title Differential
+
+**** end user architecture code
+**.ends
+.GLOBAL GND
+.end

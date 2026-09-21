@@ -1,0 +1,10 @@
+** sch_path: /foss/designs/Inverter2.sch
+**.subckt Inverter2 name=VDD  Y
+*.ipin A
+*.iopin VSS
+*.iopin VDD
+*.opin Y
+XM2 Y A VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XM1 Y A VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+**.ends
+.end

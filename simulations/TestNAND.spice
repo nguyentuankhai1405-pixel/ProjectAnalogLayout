@@ -1,0 +1,38 @@
+** sch_path: /foss/designs/TestNAND.sch
+**.subckt TestNAND
+Va Va GND PULSE(0 1.2 0 1n 1n 9n 20n)
+VDD vdd GND 1.2
+Vb Vb GND PULSE(0 1.2 0 1n 1n 4n 10n)
+x1 vdd Va vout Vb GND NOR2
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+.tran 10p 50n
+.save all
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /foss/designs/LogicGate/NOR2.sym # of pins=5
+** sym_path: /foss/designs/LogicGate/NOR2.sym
+** sch_path: /foss/designs/LogicGate/NOR2.sch
+.subckt NOR2 VDD A Y B VSS
+*.ipin A
+*.ipin B
+*.opin Y
+*.iopin VDD
+*.iopin VSS
+XXM1 net1 A VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XXM2 Y B net1 VDD sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XXM3 Y A VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XXM4 Y B VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+.ends
+
+.GLOBAL GND
+.end

@@ -1,0 +1,102 @@
+** sch_path: /foss/designs/BTDay5-Ex/Test-diff_2stageOpampCore.sch
+**.subckt Test-diff_2stageOpampCore
+VDD VDD VSS 1.2
+VIN VIN VSS DC 0.8 Ac -0.5
+VIP VIP VSS DC 0.8 Ac +0.5
+VSS VSS GND 0
+VB2 VBIAS VSS 0.65
+x1 VDD VBIAS VOP VON VIP VIN GND full-diff_2-stage-OpampCore
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+.control
+save all
+op
+
+* 1. DO CONG SUAT VA DIEM LAM VIEC DC
+let power_mw = abs(i(vdd)[0]) * 1.2 * 1000
+echo ================= KET QUA DC & CONG SUAT =================
+print v(vip) v(vin) v(vbias) v(vop) v(von)
+print power_mw
+
+* 2. MO PHONG AC VA TINH TOAN HE SO
+ac dec 100 1 10G
+
+let vid = v(vip) - v(vin)
+let vod = v(vop) - v(von)
+let av = vod / vid
+let gain_db = db(av)
+let phase_deg = cph(av) * 180 / pi
+
+* Do Open Loop Gain o tan so thap (dang so lan)
+let open_loop_gain_times = mag(av[0])
+
+if phase_deg[0] > 90
+  let phase_deg = phase_deg - 360
+end
+
+* Do tan so cat 0dB va Phase Margin
+meas ac f_ug when gain_db=0 fall=1
+meas ac phase_at_ug find phase_deg when gain_db=0 fall=1
+let phase_margin = 180 + phase_at_ug
+
+echo ================= TONG HOP CHI TIEU EX2 =================
+echo 1. Open Loop Gain (Yeu cau: > 3000):
+print open_loop_gain_times
+echo 2. DC Gain dB (Yeu cau: > 50 dB):
+print gain_db[0]
+echo 3. Bandwidth GBW f_ug (Yeu cau: > 3 MHz):
+print f_ug
+echo 4. Phase Margin (Yeu cau: 50 - 60 deg):
+print phase_margin
+echo 5. Cong suat Power (Yeu cau: < 2 mW):
+print power_mw
+echo =========================================================
+
+let line_0db = 0 * frequency
+let line_m180 = -180 + 0 * frequency
+
+plot gain_db phase_deg line_0db line_m180 xlog ylimit -360 80 title 'Ex2: Fully-Diff OpAmp Open-Loop Frequency Response'
+.endc
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /foss/designs/BTDay5-Ex/full-diff_2-stage-OpampCore.sym # of pins=7
+** sym_path: /foss/designs/BTDay5-Ex/full-diff_2-stage-OpampCore.sym
+** sch_path: /foss/designs/BTDay5-Ex/full-diff_2-stage-OpampCore.sch
+.subckt full-diff_2-stage-OpampCore VDD VBIAS VOP VON VIP VIN VSS
+*.ipin VIN
+*.ipin VIP
+*.opin VOP
+*.iopin VDD
+*.iopin VSS
+*.ipin VBIAS
+*.opin VON
+XM1 net3 VIN net1 VSS sg13_lv_nmos w=4u l=1u ng=1 m=2 mm_ok=1
+XM2 net2 VIP net1 VSS sg13_lv_nmos w=4u l=1u ng=1 m=2 mm_ok=1
+XM3 net1 VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=4 mm_ok=1
+XM4 net3 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM7 VB2 VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM8 VB2 VBIAS VDD VDD sg13_lv_pmos w=2u l=6u ng=1 m=1 mm_ok=1
+XM10 net2 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM5 VOP VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=5 mm_ok=1
+XM11 VOP net2 VDD VDD sg13_lv_pmos w=4u l=1u ng=1 m=5 mm_ok=1
+C2 VOP net4 0.4p
+R1 net4 net2 150k
+XM9 VON VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=5 mm_ok=1
+C3 net5 VON 0.4p
+R2 net3 net5 150k
+XM12 VB1 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM13 VB1 VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM6 VON net3 VDD VDD sg13_lv_pmos w=4u l=1u ng=1 m=5 mm_ok=1
+.ends
+
+.GLOBAL GND
+.end

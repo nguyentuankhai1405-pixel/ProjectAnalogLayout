@@ -1,0 +1,32 @@
+** sch_path: /foss/designs/LogicGate/XOR2.sch
+**.subckt XOR2 Y VSS VDD A B
+*.opin Y
+*.iopin VSS
+*.iopin VDD
+*.ipin A
+*.ipin B
+x1 VDD A A' VSS inverter
+x2 VDD B B' VSS inverter
+XM1 net3 A' VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XM2 Y B net3 VDD sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XM3 net4 A VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XM4 Y B' net4 VDD sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XM5 Y A net1 VSS sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XM6 net1 B VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XM7 Y A' net2 VSS sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XM8 net2 B' VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+**.ends
+
+* expanding   symbol:  /foss/designs/LogicGate/inverter.sym # of pins=4
+** sym_path: /foss/designs/LogicGate/inverter.sym
+** sch_path: /foss/designs/LogicGate/inverter.sch
+.subckt inverter VDD A Y VSS
+*.ipin A
+*.opin Y
+*.iopin VDD
+*.iopin VSS
+XM1 Y A VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XM2 Y A VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+.ends
+
+.end

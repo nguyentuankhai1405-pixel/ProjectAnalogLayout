@@ -1,0 +1,21 @@
+** sch_path: /foss/designs/BTDay5-Ex/2-stageOpampWithoutCMFB.sch
+**.subckt 2-stageOpampWithoutCMFB VBIAS VOUT VIP VIN VDD VSS
+*.iopin VSS
+*.iopin VDD
+*.ipin VIP
+*.ipin VIN
+*.ipin VBIAS
+*.opin VOUT
+XM1 net3 VIN net1 VSS sg13_lv_nmos w=4u l=1u ng=1 m=2 mm_ok=1
+XM2 net4 VIP net1 VSS sg13_lv_nmos w=4u l=1u ng=1 m=2 mm_ok=1
+XM3 net1 net2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=4 mm_ok=1
+XM4 net3 net3 VDD VDD sg13_lv_pmos w=4u l=1u ng=1 m=2 mm_ok=1
+XM7 net2 net2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM8 net2 VBIAS VDD VDD sg13_lv_pmos w=1u l=6u ng=1 m=1 mm_ok=1
+XM10 net4 net3 VDD VDD sg13_lv_pmos w=4u l=1u ng=1 m=2 mm_ok=1
+XM5 VOUT net2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=5 mm_ok=1
+XM11 VOUT net4 VDD VDD sg13_lv_pmos w=4u l=1u ng=1 m=5 mm_ok=1
+C2 VOUT net5 0.4p
+R1 net5 net4 150k
+**.ends
+.end

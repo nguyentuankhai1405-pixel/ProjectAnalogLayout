@@ -1,0 +1,28 @@
+** sch_path: /foss/designs/BTDay5-Ex/full-diff_2-stage-OpampCore.sch
+**.subckt full-diff_2-stage-OpampCore VDD VBIAS VOP VON VIP VIN VSS
+*.ipin VIN
+*.ipin VIP
+*.opin VOP
+*.iopin VDD
+*.iopin VSS
+*.ipin VBIAS
+*.opin VON
+XM1 net3 VIN net1 VSS sg13_lv_nmos w=4u l=1u ng=1 m=2 mm_ok=1
+XM2 net2 VIP net1 VSS sg13_lv_nmos w=4u l=1u ng=1 m=2 mm_ok=1
+XM3 net1 VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=4 mm_ok=1
+XM4 net3 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM7 VB2 VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM8 VB2 VBIAS VDD VDD sg13_lv_pmos w=2u l=6u ng=1 m=1 mm_ok=1
+XM10 net2 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=2 mm_ok=1
+XM5 VOP VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=5 mm_ok=1
+XM11 VOP net2 VDD VDD sg13_lv_pmos w=4u l=1u ng=1 m=5 mm_ok=1
+C2 VOP net4 0.4p
+R1 net4 net2 150k
+XM9 VON VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=5 mm_ok=1
+C3 net5 VON 0.4p
+R2 net3 net5 150k
+XM12 VB1 VB1 VDD VDD sg13_lv_pmos w=8u l=1u ng=1 m=1 mm_ok=1
+XM13 VB1 VB2 VSS VSS sg13_lv_nmos w=4u l=1u ng=1 m=1 mm_ok=1
+XM6 VON net3 VDD VDD sg13_lv_pmos w=4u l=1u ng=1 m=5 mm_ok=1
+**.ends
+.end

@@ -1,0 +1,22 @@
+** sch_path: /foss/designs/BTDay8-Ex/AMP_BIAS_08V.sch
+**.subckt AMP_BIAS_08V VB1 VBIAS VB2 VB3 VB4 VDD VSS
+*.iopin VDD
+*.iopin VSS
+*.ipin VBIAS
+*.opin VB1
+*.opin VB2
+*.opin VB3
+*.opin VB4
+XM6 VB1 VB1 VDD VDD sg13_lv_pmos w=15u l=0.7u ng=1 m=2 mm_ok=1
+XM7 net1 VB1 VDD VDD sg13_lv_pmos w=15u l=0.7u ng=1 m=2 mm_ok=1
+XM9 VB3 VB2 net1 VDD sg13_lv_pmos w=15u l=0.7u ng=1 m=2 mm_ok=1
+XM10 net2 VBIAS VDD VDD sg13_lv_pmos w=1u l=4u ng=1 m=2 mm_ok=1
+XM11 net2 net2 net3 VSS sg13_lv_nmos w=3u l=1u ng=1 m=1 mm_ok=1
+XM12 VB2 net2 net4 VSS sg13_lv_nmos w=3u l=1u ng=1 m=1 mm_ok=1
+XM13 net3 net3 VSS VSS sg13_lv_nmos w=3u l=1u ng=1 m=1 mm_ok=1
+XM15 VB3 VB3 VB4 VSS sg13_lv_nmos w=7u l=0.7u ng=1 m=1 mm_ok=1
+XM16 VB4 VB4 VSS VSS sg13_lv_nmos w=7u l=0.7u ng=1 m=1 mm_ok=1
+XM8 VB2 VB2 VB1 VDD sg13_lv_pmos w=15u l=0.7u ng=1 m=2 mm_ok=1
+XM14 net4 net3 VSS VSS sg13_lv_nmos w=3u l=1u ng=1 m=1 mm_ok=1
+**.ends
+.end

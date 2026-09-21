@@ -1,0 +1,13 @@
+** sch_path: /foss/designs/LogicGate/NOR2.sch
+**.subckt NOR2 A B Y VDD VSS
+*.ipin A
+*.ipin B
+*.opin Y
+*.iopin VDD
+*.iopin VSS
+XM1 net1 A VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XM2 Y B net1 VDD sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XM3 Y A VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XM4 Y B VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+**.ends
+.end

@@ -1,0 +1,19 @@
+** sch_path: /foss/designs/BTDay7-Ex/OTA.sch
+**.subckt OTA VDD iout v- v+ vout vss
+*.iopin VDD
+*.iopin iout
+*.iopin V-
+*.iopin VSS
+*.iopin V+
+*.iopin vout
+XM6 iout iout VDD VDD sg13_lv_pmos w=75u l=2.08u ng=8 m=1 mm_ok=1
+XM7 net1 iout VDD VDD sg13_lv_pmos w=5.3u l=1.95u ng=1 m=1 mm_ok=1
+XM8 net3 V- net1 VDD sg13_lv_pmos w=7.41u l=3.64u ng=1 m=1 mm_ok=1
+XM9 net2 V+ net1 VDD sg13_lv_pmos w=7.41u l=3.64u ng=1 m=1 mm_ok=1
+XM10 net3 net3 VSS VSS sg13_lv_nmos w=720n l=9.75u ng=1 m=1 mm_ok=1
+XM11 net2 net3 VSS VSS sg13_lv_nmos w=720n l=9.75u ng=1 m=1 mm_ok=1
+XM1 vout net2 VSS VSS sg13_lv_nmos w=28.8u l=9.75u ng=4 m=1 mm_ok=1
+XM2 vout iout VDD VDD sg13_lv_pmos w=75u l=2.08u ng=8 m=1 mm_ok=1
+XC1 net2 vout cap_cmim w=22.295e-6 l=22.295e-6 m=1 mm_ok=1
+**.ends
+.end

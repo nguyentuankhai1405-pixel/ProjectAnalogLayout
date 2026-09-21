@@ -1,0 +1,11 @@
+** sch_path: /foss/designs/BTDay6-Ex/CS_Ampli_Current.sch
+**.subckt CS_Ampli_Current BIAS IN VDD OUT VSS
+*.opin OUT
+*.ipin IN
+*.iopin VDD
+*.iopin VSS
+*.ipin BIAS
+XXM1 OUT IN VSS VSS sg13_lv_nmos w=4u l=1.3u ng=2 m=1 mm_ok=1
+XXM2 OUT BIAS VDD VDD sg13_lv_pmos w=15u l=1.3u ng=3 m=1 mm_ok=1
+**.ends
+.end

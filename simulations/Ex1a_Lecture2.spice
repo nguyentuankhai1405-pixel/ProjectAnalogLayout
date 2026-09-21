@@ -1,0 +1,26 @@
+** sch_path: /foss/designs/BTDay2-Ex/Ex1a_Lecture2.sch
+**.subckt Ex1a_Lecture2
+XM1 vout vin GND GND sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XM2 vout vin vdd vdd sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+VIN vin GND 0
+VDD vdd GND 1.2
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+.param temp=27
+.control
+save all
+op
+dc VIN 0 1.2 0.01
+.endc
+
+
+**** end user architecture code
+**.ends
+.GLOBAL GND
+.end

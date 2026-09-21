@@ -1,0 +1,13 @@
+** sch_path: /foss/designs/BTDay7-Ex/Ex-two_stage_OTA.sch
+.subckt Ex-two_stage_OTA vdd iout v- vss v+ vout
+*.PININFO vdd:B iout:B v-:B vss:B v+:B vout:B
+MM6 iout iout vdd vdd sg13_lv_pmos w=75u l=2.08u ng=8
+MM7 net1 iout vdd vdd sg13_lv_pmos w=5.3u l=1.95u ng=1
+MM8 net3 v- net1 vdd sg13_lv_pmos w=7.41u l=3.64u ng=1
+MM9 net2 v+ net1 vdd sg13_lv_pmos w=7.41u l=3.64u ng=1
+MM10 net3 net3 vss vss sg13_lv_nmos w=720n l=9.75u ng=1
+MM11 net2 net3 vss vss sg13_lv_nmos w=720n l=9.75u ng=1
+MM1 vout net2 vss vss sg13_lv_nmos w=28.8u l=9.75u ng=4
+MM2 vout iout vdd vdd sg13_lv_pmos w=75u l=2.08u ng=8
+CC1 net2 vout cap_cmim w=22.295e-6 l=22.295e-6
+.ends

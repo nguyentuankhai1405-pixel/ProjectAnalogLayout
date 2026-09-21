@@ -1,0 +1,42 @@
+ ** Top-level Testbench for Post-Layout Two-Stage OTA (9 PINS)
+.param temp=27
+.option nomod
+
+* 1. Nguon cap va Tin hieu
+vdd vdd GND DC 1.2
+VIN vp GND DC 0.6 AC 1 0
+I0 net1 GND 80u
+Cload vout GND 500f
+C1 vn GND 4G
+L6 vout vn 4G
+
+* 2. Goi x1 khop chinh xac 100% voi 9 chan cua Magic:
+* Thu tu: v-  v+  dn4  vss  vdd  dn3  dn2  iout  vout
+x1        vn  vp  dn4  GND  vdd  dn3  dn2  net1  vout  two_stage_OTA_layout
+
+* 3. Thu vien PDK va Netlist PEX
+.lib /foss/pdks/ihp-sg13g2/libs.tech/ngspice/models/cornerCAP.lib cap_typ
+.lib /foss/pdks/ihp-sg13g2/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.include /foss/designs/Klayout/Ex-2stageOTA/two_stage_OTA_layout.spice
+
+* 4. Lenh mo phong AC va do dac tu dong
+.control
+op
+save all
+ac dec 100 1 100MEG
+
+let Av = db(v(vout))
+let phase = (180/pi) * cph(v(vout))
+
+meas ac A0 MAX Av
+meas ac f_ugb WHEN Av=0
+meas ac p_at_ugb FIND phase WHEN Av=0
+let PM = 180 + p_at_ugb
+
+print A0 f_ugb PM
+
+plot Av xlog title 'Post-Layout Voltage Gain (dB)'
+plot phase xlog title 'Post-Layout Phase (deg)'
+.endc
+.end
+

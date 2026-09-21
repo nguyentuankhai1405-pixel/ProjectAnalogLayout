@@ -1,0 +1,10 @@
+* SPICE3 file created from InverterBeta.ext - technology: ihp-sg13g2
+
+X0 Y A VSS VSS sg13_lv_nmos ad=0.1005p pd=1.34u as=99f ps=1.32u w=0.15u l=0.14u
+X1 Y A VDD VDD sg13_lv_pmos ad=99f pd=1.32u as=0.1005p ps=1.34u w=0.15u l=0.14u
+C0 Y A 0.03607f
+C1 Y VDD 0.03482f
+C2 VDD A 0.06757f
+C3 Y VSS 0.10734f
+C4 A VSS 0.19877f
+C5 VDD VSS 0.14046f

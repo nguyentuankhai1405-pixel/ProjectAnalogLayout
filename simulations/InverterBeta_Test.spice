@@ -1,0 +1,34 @@
+** sch_path: /foss/designs/InverterBeta_Test.sch
+.subckt InverterBeta_Test
+
+VIN vin GND PULSE(0 1.2 0 1n 1n 4n 10n)
+VDD vdd GND 1.2
+x2 vdd vin vout GND inverter
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+.tran 10p 100n
+.save all
+
+
+
+
+.inc /foss/designs/InverterBeta.spice
+
+
+**** end user architecture code
+.ends
+
+* expanding   symbol:  /foss/designs/BTDay2-Ex/inverter.sym # of pins=4
+** sym_path: /foss/designs/BTDay2-Ex/inverter.sym
+** sch_path: /foss/designs/BTDay2-Ex/inverter.sch
+.subckt inverter VDD A Y VSS
+
+.ends
+
+.GLOBAL GND

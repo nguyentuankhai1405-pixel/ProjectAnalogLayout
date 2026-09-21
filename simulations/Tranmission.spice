@@ -1,0 +1,12 @@
+** sch_path: /foss/designs/LogicGate/Tranmission.sch
+**.subckt Tranmission VDD ENB OUT IN EN VSS
+*.ipin IN
+*.opin OUT
+*.iopin VDD
+*.iopin VSS
+*.ipin EN
+*.ipin ENB
+XXM1 OUT ENB IN VDD sg13_lv_pmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+XXM2 OUT EN IN VSS sg13_lv_nmos w=0.15u l=0.13u ng=1 m=1 mm_ok=1
+**.ends
+.end

@@ -1,0 +1,10 @@
+** sch_path: /foss/designs/BTDay8-Ex/AMP_INV_08V.sch
+.subckt AMP_INV_08V VOP VON VIP VIN VB3 VDD VSS VB1
+*.PININFO VDD:B VSS:B VOP:O VON:O VIN:I VIP:I VB3:I VB1:I
+MM4 VOP VIN net2 VSS sg13_lv_nmos w=4u l=1u ng=1
+MM0 net1 VB1 VDD VDD sg13_lv_pmos w=8u l=0.7u ng=1 m=2
+MM5 net2 VB3 VSS VSS sg13_lv_nmos w=4u l=0.7u ng=1 m=2
+MM3 VON VIP net2 VSS sg13_lv_nmos w=4u l=1u ng=1
+MM2 VON VIP net1 VDD sg13_lv_pmos w=4u l=1u ng=1
+MM1 VOP VIN net1 VDD sg13_lv_pmos w=4u l=1u ng=1
+.ends

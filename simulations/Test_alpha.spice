@@ -1,0 +1,26 @@
+** sch_path: /foss/designs/BTDay2-Ex/Test_alpha.sch
+**.subckt Test_alpha
+VIN vin GND PULSE(0 1.2 0 1n 1n 4n 10n)
+VDD vdd GND 1.2
+x1 vdd vin vout GND Alpha
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+.tran 10p 100n
+.save all
+
+
+
+
+.inc /foss/designs/Klayout/Alpha.spice
+
+
+**** end user architecture code
+**.ends
+.GLOBAL GND
+.end

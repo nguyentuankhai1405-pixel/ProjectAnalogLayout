@@ -1,0 +1,70 @@
+** sch_path: /foss/designs/BTDay7-Ex/TestCMRR_PSRR-OTA.sch
+.subckt TestCMRR_PSRR-OTA
+
+I2 net1 GND 80u
+Cload vout1 GND 500f
+vdd vdd GND DC 1.2
+vp vp GND DC 0.6 AC 1 0
+x1 vp vp GND vdd net1 vout1 OTA
+I1 net2 GND 80u
+C2 vm2 GND 4G
+L9 vout2 vm2 4G
+x2 vm2 net3 GND VDDac net2 vout2 OTA
+v4 net3 GND DC 0.6
+v2 VDDac GND DC 1.2 AC 1 0
+I0 net4 GND 80u
+Cload1 vout GND 500f
+C1 vm1 GND 4G
+L15 vout vm1 4G
+x3 vm1 vp GND vdd net4 vout OTA
+**** begin user architecture code
+
+.lib /foss/pdks/ihp-sg13g2/libs.tech/ngspice/models/cornerCAP.lib cap_typ
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+.control
+op
+save all
+
+* Chay phan tich AC tu 1Hz den 10MHz
+ac dec 100 1 10e6
+save all
+
+* Tinh toan cac dai luong theo Slide 23
+let Av = db(v(vout))
+let PSRR = db(v(vout2)/v(VDDac))
+let CMRR = db((v(vout)/v(vp))/(v(vout1)/v(vp)))
+let phase = 180*cph(vout)/pi
+
+* Ghi du lieu ra file raw
+write output_file.raw
+
+* Ve do thi kiem tra truc tiep tren Ngspice
+plot CMRR xlog title 'Common-Mode Rejection Ratio - CMRR (dB)'
+plot PSRR xlog title 'Power Supply Rejection Ratio - PSRR (dB)'
+.endc
+
+
+**** end user architecture code
+.ends
+
+* expanding   symbol:  /foss/designs/BTDay7-Ex/OTA.sym # of pins=6
+** sym_path: /foss/designs/BTDay7-Ex/OTA.sym
+** sch_path: /foss/designs/BTDay7-Ex/OTA.sch
+.subckt OTA V- V+ VSS VDD iout vout
+*.PININFO VDD:B iout:B V-:B VSS:B V+:B vout:B
+MM6 iout iout VDD VDD sg13_lv_pmos w=75u l=2.08u ng=8
+MM7 net1 iout VDD VDD sg13_lv_pmos w=5.3u l=1.95u ng=1
+MM8 net3 V- net1 VDD sg13_lv_pmos w=7.41u l=3.64u ng=1
+MM9 net2 V+ net1 VDD sg13_lv_pmos w=7.41u l=3.64u ng=1
+MM10 net3 net3 VSS VSS sg13_lv_nmos w=720n l=9.75u ng=1
+MM11 net2 net3 VSS VSS sg13_lv_nmos w=720n l=9.75u ng=1
+MM1 vout net2 VSS VSS sg13_lv_nmos w=28.8u l=9.75u ng=4
+MM2 vout iout VDD VDD sg13_lv_pmos w=75u l=2.08u ng=8
+CC1 net2 vout cap_cmim w=22.295e-6 l=22.295e-6
+.ends
+
+.GLOBAL GND
